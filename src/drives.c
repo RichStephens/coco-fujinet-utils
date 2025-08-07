@@ -25,7 +25,8 @@ int main(void)
     fuji_ready();
     fuji_get_response((byte *)&d[0], 152);    
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++) 
+    {
         if (d[i].hostSlot != 0xFF) 
         {
             printf("%d: %s\n", i, (char *)d[i].file);
