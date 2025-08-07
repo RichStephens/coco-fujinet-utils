@@ -1,0 +1,11 @@
+/config.bin
+/config.o
+/drives.bin
+/drives.o
+/dwread.o
+/dwwrite.o
+/fuji_get_response.o
+/fuji_ready.o
+/fujiutil.dsk
+/time.bin
+/time.o
