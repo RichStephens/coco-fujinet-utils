@@ -1,4 +1,4 @@
-# Makefile for Building CoCo Config with CMOC
+# Makefile for Fuji utility disk image creation
 
 CC=cmoc
 AS=lwasm
@@ -7,14 +7,14 @@ ECHO=echo
 
 CFLAGS=-I./src
 
-all: clean time.bin drives.bin config.bin fujiutil.dsk
+all: clean time.bin drives.bin cfg.bin fujiutil.dsk
 
 fujiutil.dsk: time.bin drives.bin
 	$(RM) fujiutil.dsk
 	decb dskini fujiutil.dsk
 	writecocofile fujiutil.dsk time.bin
 	writecocofile fujiutil.dsk drives.bin	
-	writecocofile fujiutil.dsk config.bin
+	writecocofile fujiutil.dsk cfg.bin
 
 time.bin: time.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
 	$(CC) -o time.bin time.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
@@ -22,8 +22,8 @@ time.bin: time.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
 drives.bin: drives.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
 	$(CC) -o drives.bin drives.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
 
-config.bin: config.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
-	$(CC) -o config.bin config.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o	
+cfg.bin: cfg.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o
+	$(CC) -o cfg.bin cfg.o dwwrite.o dwread.o fuji_get_response.o fuji_ready.o	
 
 time.o: src/time.c
 	$(CC) $(CFLAGS) -c src/time.c
@@ -31,8 +31,8 @@ time.o: src/time.c
 drives.o: src/drives.c
 	$(CC) $(CFLAGS) -c src/drives.c		
 
-config.o: src/config.c
-	$(CC) $(CFLAGS) -c src/config.c
+cfg.o: src/cfg.c
+	$(CC) $(CFLAGS) -c src/cfg.c
 
 dwwrite.o: src/dwwrite.c
 	$(CC) $(CFLAGS) -c src/dwwrite.c

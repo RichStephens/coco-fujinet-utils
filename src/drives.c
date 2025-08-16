@@ -1,5 +1,6 @@
+#include <coco.h>
 #include <fujinet.h>
-#include <cmoc.h>
+
 
 int main(void)
 {

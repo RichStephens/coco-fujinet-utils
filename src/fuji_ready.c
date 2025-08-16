@@ -1,4 +1,4 @@
-#include <cmoc.h>
+#include <coco.h>
 #include <fujinet.h>
 
 void fuji_ready(void)

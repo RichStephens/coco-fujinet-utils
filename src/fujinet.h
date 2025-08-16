@@ -1,7 +1,6 @@
 #ifndef FUJINET_H
 #define FUJINET_H
 
-typedef unsigned char byte;
 #define FILE_MAXLEN    36
 
 typedef struct {

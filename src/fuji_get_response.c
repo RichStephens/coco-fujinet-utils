@@ -1,4 +1,4 @@
-#include <cmoc.h>
+#include <coco.h>
 #include <fujinet.h>
 /**
  * @brief Get response data from last Fuji command
