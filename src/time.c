@@ -1,14 +1,14 @@
-#include <coco.h>
-#include <fujinet.h>
+#include <dw.h>
+#include <fujinet-fuji-coco.h>
 
 int main(void)
 {
 	byte timebuf[6];
-    byte cmd = OP_TIME;
+    byte cmd = 0x23; // Command to get time
 
     memset(&timebuf, 0, sizeof(timebuf));
 
-	fuji_ready();
+	bus_ready();
     dwwrite((byte *) &cmd, 1);
 
     if (dwread(&timebuf, sizeof(timebuf)))

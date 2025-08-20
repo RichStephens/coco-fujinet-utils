@@ -1,6 +1,5 @@
 #include <coco.h>
-#include <fujinet.h>
-
+#include <fujinet-fuji.h>
 
 int main(void)
 {
@@ -11,21 +10,8 @@ int main(void)
         memset(&d[i], 0, sizeof(DeviceSlot)); 
     }
 
-	struct _get_device_slots
-    {
-        byte opcode;
-        byte cmd;
-    } gdsc;
-
-    gdsc.opcode = OP_FUJI;
-    gdsc.cmd = 0xF2;
-
-    fuji_ready();
-    dwwrite((byte *)&gdsc, sizeof(gdsc));
-
-    fuji_ready();
-    fuji_get_response((byte *)&d[0], 152);    
-
+    fuji_get_device_slots(d,sizeof(d));
+	
     for (int i = 0; i < 4; i++) 
     {
         if (d[i].hostSlot != 0xFF) 

@@ -1,11 +1,12 @@
 #include <coco.h>
-#include <fujinet.h>
+#include <dw.h>
+#include <fujinet-fuji-coco.h>
 
 
 int main(void)
 {
-    byte cmd = OP_RESET1;
-    fuji_ready(); 
+    byte cmd = 0xFF; // Command to reset the CoCo
+    bus_ready(); 
     dwwrite((byte *) &cmd, 1);
 
     // Reset the coco itself
