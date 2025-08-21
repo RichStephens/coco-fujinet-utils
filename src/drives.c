@@ -4,6 +4,8 @@
 int main(void)
 {
     DeviceSlot d[4];
+
+    char rw;
     
     for (int i = 0; i < 4; i++) 
     {
@@ -16,7 +18,13 @@ int main(void)
     {
         if (d[i].hostSlot != 0xFF) 
         {
-            printf("%d: %s\n", i, (char *)d[i].file);
+            switch (d[i].mode) 
+            {
+                case 0x01: rw = 'R'; break; // Read
+                case 0x02: rw = 'W'; break; // Write
+                default:   rw = '?'; break; // Unknown
+            }
+            printf("%d: (%d) (%c) %s\n", i, d[i].hostSlot+1, rw,  (char *)d[i].file);
         }
     }           
 
