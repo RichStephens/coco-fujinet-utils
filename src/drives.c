@@ -20,9 +20,14 @@ int main(void)
         {
             switch (d[i].mode) 
             {
-                case 0x01: rw = 'R'; break; // Read
-                case 0x02: rw = 'W'; break; // Write
-                default:   rw = '?'; break; // Unknown
+                case 0x01:
+                case 0x41:
+                    rw = 'R'; break; // Read
+                case 0x02: 
+                case 0x42: 
+                    rw = 'W'; break; // Write
+                default:   
+                    rw = '?'; break; // Unknown
             }
             printf("%d: (%d) (%c) %s\n", i, d[i].hostSlot+1, rw,  (char *)d[i].file);
         }
