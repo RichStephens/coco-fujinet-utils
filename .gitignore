@@ -1,3 +1,4 @@
 /*.bin
 /*.o
 /fujiutil.dsk
+.vscode/c_cpp_properties.json

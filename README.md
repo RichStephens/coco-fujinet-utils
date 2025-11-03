@@ -8,6 +8,8 @@ CFG.BIN - Resets the drive configuration to point to the initial configuration b
 
 FNINFO.BIN - Prints out the FujiNet adapter network information and firmware version.
 
+APPKEYS.BIN - Allows you to peruse the app keys created by various applications, stored on the FujiNet SD card.
+
 These files are contained on a Color Computer disk image file, fujiutil.dsk.
 
 Building this requires a Linux system with a copy of the C compiler cmoc, found at  http://sarrazip.com/dev/cmoc.html, and the lwtools assembler/linker utilities, found at http://lwtools.ca, and the fujinet-lib, found at https://github.com/FujiNetWIFI/fujinet-lib.

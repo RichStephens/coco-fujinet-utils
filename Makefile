@@ -6,10 +6,10 @@ CP=cp
 ECHO=echo
 
 FUJINET_LIB_DIR=../fujinet-lib
-LIBS=-L$(FUJINET_LIB_DIR)/build -lfujinet.lib.coco
-CFLAGS=-I./src -I$(FUJINET_LIB_DIR) -I$(FUJINET_LIB_DIR)/coco/src/include
+LIBS=-L$(FUJINET_LIB_DIR)/build -l:fujinet.lib.coco
+CFLAGS=-Wno-const -I./src -I$(FUJINET_LIB_DIR) -I$(FUJINET_LIB_DIR)/coco/src/include
 
-all: clean time.bin drives.bin cfg.bin fninfo.bin fujiutil.dsk
+all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujiutil.dsk
 
 fujiutil.dsk: time.bin drives.bin
 	$(RM) fujiutil.dsk
@@ -18,6 +18,8 @@ fujiutil.dsk: time.bin drives.bin
 	writecocofile fujiutil.dsk drives.bin	
 	writecocofile fujiutil.dsk cfg.bin
 	writecocofile fujiutil.dsk fninfo.bin
+	writecocofile fujiutil.dsk appkeys.bin
+	cp fujiutil.dsk ~/tnfs
 
 time.bin: time.o    
 	$(CC) -o time.bin time.o $(LIBS)
@@ -31,6 +33,9 @@ cfg.bin: cfg.o
 fninfo.bin: fninfo.o    
 	$(CC) -o fninfo.bin fninfo.o $(LIBS)
 
+appkeys.bin: appkeys.o    
+	$(CC) -o appkeys.bin appkeys.o $(LIBS)
+
 time.o: src/time.c
 	$(CC) $(CFLAGS) -c src/time.c
 
@@ -42,6 +47,9 @@ cfg.o: src/cfg.c
 
 fninfo.o: src/fninfo.c
 	$(CC) $(CFLAGS) -c src/fninfo.c
+
+appkeys.o: src/appkeys.c
+	$(CC) $(CFLAGS) -c src/appkeys.c
 
 clean:
 	$(RM) *.o
