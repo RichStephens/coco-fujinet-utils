@@ -1,6 +1,6 @@
 Simple binary utilities for the Color Computer to work with the FujiNet device.
 
-TIME.BIN - Prints out the current date/time.  (NOTE: There is a bug in the current release of the FujiNet firmware that gives an improper value for the year.  That will be fixed in the next release of the firmware.)
+TIME.BIN - Prints out the current date/time.  (NOTE: If you get an improper value for the year, update your firmware in the FujiNet device to the latest release or nightly build.
 
 DRIVES.BIN - Prints out the current drive slot configuration, much like what you see when you exit the config program.
 
