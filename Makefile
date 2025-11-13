@@ -9,7 +9,7 @@ FUJINET_LIB_DIR=../fujinet-lib
 LIBS=-L$(FUJINET_LIB_DIR)/build -l:fujinet.lib.coco
 CFLAGS=-Wno-const -I./src -I$(FUJINET_LIB_DIR) -I$(FUJINET_LIB_DIR)/coco/src/include
 
-all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujiutil.dsk
+all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujilogo.bin fujiutil.dsk
 
 fujiutil.dsk: time.bin drives.bin
 	$(RM) fujiutil.dsk
@@ -19,6 +19,7 @@ fujiutil.dsk: time.bin drives.bin
 	writecocofile fujiutil.dsk cfg.bin
 	writecocofile fujiutil.dsk fninfo.bin
 	writecocofile fujiutil.dsk appkeys.bin
+	writecocofile fujiutil.dsk fujilogo.bin
 	cp fujiutil.dsk ~/tnfs
 
 time.bin: time.o    
@@ -36,6 +37,9 @@ fninfo.bin: fninfo.o
 appkeys.bin: appkeys.o    
 	$(CC) -o appkeys.bin appkeys.o $(LIBS)
 
+fujilogo.bin: fujilogo.o	
+	$(CC) -o fujilogo.bin fujilogo.o $(LIBS)
+
 time.o: src/time.c
 	$(CC) $(CFLAGS) -c src/time.c
 
@@ -50,6 +54,9 @@ fninfo.o: src/fninfo.c
 
 appkeys.o: src/appkeys.c
 	$(CC) $(CFLAGS) -c src/appkeys.c
+
+fujilogo.o: src/fujilogo.c
+	$(CC) $(CFLAGS) -c src/fujilogo.c
 
 clean:
 	$(RM) *.o
