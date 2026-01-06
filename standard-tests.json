@@ -1,0 +1,60 @@
+[
+  {
+    "command": "set_host_prefix",
+    "host_slot": 1,
+    "prefix": "/test",
+    "warnOnly": true
+  },
+  {
+    "command": "get_host_prefix",
+    "host_slot": 1,
+    "expected": "/test",
+    "warnOnly": true
+  },
+  {
+    "command": "hash_input",
+    "data": "testing"
+  },
+  {
+    "command": "hash_compute",
+    "algorithm": 1
+  },
+  {
+    "command": "hash_length",
+    "as_hex": true,
+    "replyLength": 1
+  },
+  {
+    "command": "hash_output",
+    "as_hex": true,
+    "replyLength": 40
+  },
+
+  {
+    "command": "read_host_slots"
+  },
+  {
+    "command": "read_device_slots"
+  },
+  {
+    "command": "get_device1_fullpath"
+  },
+
+  {
+    "command": "get_device_fullpath",
+    "device_slot": 1
+  },
+
+  {
+    "device": "apetime",
+    "command": "get_time_iso",
+    "replyLength": 25
+  },
+
+  {
+    "command": "mount_image",
+    "device_slot": 1,
+    "mode": 64,
+    "errorExpected": true
+  }
+]
