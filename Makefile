@@ -1,15 +1,15 @@
-# Makefile for Fuji utility disk image creation
+#Makefile for Fuji utility disk image creation
 
 CC=cmoc
 AS=lwasm
 CP=cp
 ECHO=echo
 
-FUJINET_LIB_DIR=../fujinet-lib-unified
-LIBS=-L$(FUJINET_LIB_DIR)/r2r/coco -lfujinet.coco
-CFLAGS=-Wno-const -I./src -I$(FUJINET_LIB_DIR)/include -I$(FUJINET_LIB_DIR)/bus/coco
+FUJINET_LIB_DIR=../fujinet-lib
+LIBS=-L$(FUJINET_LIB_DIR)/build -l:fujinet.lib.coco
+CFLAGS=-Wno-const -I./src -I$(FUJINET_LIB_DIR) -I$(FUJINET_LIB_DIR)/coco/src/include
 
-all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujilogo.bin jsonread.bin fujiutil.dsk
+all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujilogo.bin fujiutil.dsk
 
 fujiutil.dsk: time.bin drives.bin
 	$(RM) fujiutil.dsk
@@ -20,8 +20,6 @@ fujiutil.dsk: time.bin drives.bin
 	writecocofile fujiutil.dsk fninfo.bin
 	writecocofile fujiutil.dsk appkeys.bin
 	writecocofile fujiutil.dsk fujilogo.bin
-	writecocofile fujiutil.dsk jsonread.bin
-	decb copy -3 -a standard-tests.json fujiutil.dsk,TESTS.TXT
 	cp fujiutil.dsk ~/tnfs
 
 time.bin: time.o    
@@ -41,9 +39,6 @@ appkeys.bin: appkeys.o
 
 fujilogo.bin: fujilogo.o	
 	$(CC) -o fujilogo.bin fujilogo.o $(LIBS)
-
-jsonread.bin: jsonread.o	
-	$(CC) -o jsonread.bin jsonread.o $(LIBS)
 
 time.o: src/time.c
 	$(CC) $(CFLAGS) -c src/time.c

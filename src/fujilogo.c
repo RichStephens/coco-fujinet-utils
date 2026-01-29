@@ -419,6 +419,17 @@ int main(void)
     screenBuffer = (byte *) * (byte *) 0x00BC << 8;
 
     width(32);
+
+    cls(1);
+
+    printf("WHEN LOGO IS DISPLAYED:\n\n");
+
+    printf("cHANGE SCREEN COLOR SET\n");
+    printf("rEVERSE IMAGE\n");
+    printf("qUIT\n\n");
+
+    printf("<PRESS ANY KEY>");
+    waitkey(0);
     pmode(4, screenBuffer);
     pcls(255);
     set_screen(screenMode);
