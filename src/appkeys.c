@@ -18,6 +18,10 @@
 #define MAX_APP_KEYS 64
 #define EMPTY_FILTER ""
 
+#ifndef byte
+#define byte unsigned char
+#endif
+
 typedef struct 
 {
     uint16_t creator_id;
@@ -27,7 +31,7 @@ typedef struct
     uint8_t  key_value[65];
 } KeyInfo;
 
-HostSlot hostSlots[8];
+HostSlot hostSlots[NUM_HOST_SLOTS];
 char response[256];
 KeyInfo app_keys[MAX_APP_KEYS];
 int num_appkeys = 0;
@@ -72,7 +76,7 @@ uint16_t get_keyvalue(uint8_t *buffer, uint16_t creatorid, uint8_t appid, uint8_
     if (key_result && read_count > 0)
     {
         memcpy(buffer, read_buffer, read_count);
-        read_buffer[read_count] = 0;
+        buffer[read_count] = 0;
         read_result = true;
     }
 
@@ -162,6 +166,7 @@ void print_app_key(int key_ndx)
     printf("CREATOR ID: 0X%04X\n", app_keys[key_ndx].creator_id);
     printf("    APP ID: 0X%02X\n", app_keys[key_ndx].app_id);
     printf("    KEY ID: 0X%02X\n", app_keys[key_ndx].key_id);
+    printf("  KEY SIZE: %d\n", app_keys[key_ndx].key_size);
     printf("\n");
 
     printf("up/dn BROWSE APP KEYS\n");

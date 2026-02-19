@@ -3,11 +3,11 @@
 
 int main(void)
 {
-    AdapterConfig ac;
+    AdapterConfigExtended ac;
     
-    memset(&ac, 0, sizeof(AdapterConfig));
+    memset(&ac, 0, sizeof(AdapterConfigExtended));
 
-    if (fuji_get_adapter_config(&ac)) 
+    if (fuji_get_adapter_config_extended(&ac)) 
     {
         printf("\n");
         printf("%10s%s\n", "SSID: ", strupr(ac.ssid));

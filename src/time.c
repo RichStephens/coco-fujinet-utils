@@ -1,20 +1,16 @@
-#include <dw.h>
-#include <fujinet-fuji-coco.h>
+#include <cmoc.h>
+#include <coco.h>
+#include <fujinet-clock.h>
+
+static uint8_t time_result[7];
 
 int main(void)
 {
-	byte timebuf[6];
-    byte cmd = 0x23; // Command to get time
+    memset(time_result, 0, sizeof(time_result));
 
-    memset(&timebuf, 0, sizeof(timebuf));
-
-	bus_ready();
-    dwwrite((byte *) &cmd, 1);
-
-    if (dwread(&timebuf, sizeof(timebuf)))
+    if (clock_get_time(time_result, SIMPLE_BINARY) == 0)
     {
-        printf("%04d-%02d-%02d %02d:%02d:%02d\n", timebuf[0] + 1900,
-			timebuf[1], timebuf[2], timebuf[3], timebuf[4], timebuf[5]);
+        printf("%02d%02d-%02d-%02d %02d:%02d:%02d\n", time_result[0], time_result[1], time_result[2], time_result[3], time_result[4], time_result[5], time_result[6]);
     }
     else 
     {
@@ -23,4 +19,5 @@ int main(void)
 
 	return 0;
 }
+
 
