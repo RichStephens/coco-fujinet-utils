@@ -9,7 +9,7 @@ FUJINET_LIB_DIR=../fujinet-lib
 LIBS=-L$(FUJINET_LIB_DIR)/build -l:fujinet.lib.coco
 CFLAGS=-Wno-const -I./src -I$(FUJINET_LIB_DIR) -I$(FUJINET_LIB_DIR)/coco/src/include
 
-all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujilogo.bin clock.bin hosts.bin guid.bin fujiutil.dsk
+all: clean time.bin drives.bin cfg.bin fninfo.bin appkeys.bin fujilogo.bin clock.bin hosts.bin guid.bin bastime.bin basguid.bin fujiutil.dsk
 
 fujiutil.dsk: time.bin drives.bin
 	$(RM) fujiutil.dsk
@@ -23,6 +23,8 @@ fujiutil.dsk: time.bin drives.bin
 	writecocofile fujiutil.dsk clock.bin
 	writecocofile fujiutil.dsk hosts.bin
 	writecocofile fujiutil.dsk guid.bin
+	writecocofile fujiutil.dsk bastime.bin
+	writecocofile fujiutil.dsk basguid.bin
 	cp fujiutil.dsk ~/tnfs
 
 time.bin: time.o    
@@ -52,6 +54,12 @@ guid.bin: guid.o
 fujilogo.bin: fujilogo.o	
 	$(CC) -o fujilogo.bin fujilogo.o $(LIBS)
 
+bastime.bin: bastime.o basfuncs.o
+	$(CC) -o bastime.bin --org=7300 --limit=8000 --no-relocate -Wfor-condition-sizes -Werror bastime.o basfuncs.o $(LIBS)	
+
+basguid.bin: basguid.o basfuncs.o	
+	$(CC) -o basguid.bin --org=7300 --limit=8000 --no-relocate -Wfor-condition-sizes -Werror basguid.o basfuncs.o $(LIBS)
+
 time.o: src/time.c
 	$(CC) $(CFLAGS) -c src/time.c
 
@@ -77,7 +85,16 @@ hosts.o: src/hosts.c
 	$(CC) $(CFLAGS) -c src/hosts.c	
 
 guid.o: src/guid.c
-	$(CC) $(CFLAGS) -c src/guid.c	
+	$(CC) $(CFLAGS) -c src/guid.c
+
+bastime.o: src/bastime.c
+	$(CC) $(CFLAGS) -c src/bastime.c	
+
+basfuncs.o: src/basfuncs.c
+	$(CC) $(CFLAGS) -c src/basfuncs.c	
+
+basguid.o: src/basguid.c
+	$(CC) $(CFLAGS) -c src/basguid.c			
 
 clean:
 	$(RM) *.o

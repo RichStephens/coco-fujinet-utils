@@ -5,6 +5,9 @@
 #define SCREEN_WIDTH 32
 #define X0 1
 #define Y0 4
+#define X1 29
+#define Y1 2
+#define SPACE 0x20
 
 static byte last_h = 255;
 static byte last_m = 255;
@@ -13,6 +16,12 @@ static byte last_century = 255;
 static byte last_year = 255;
 static byte last_month = 255;
 static byte last_day = 255;
+
+typedef enum 
+{
+    AMPM,
+    MILITARY
+} ClockMode;
 
 const byte digits4x8[10][8][4] =
 {
@@ -170,10 +179,35 @@ void draw_colon(byte x)
     }
 }
 
-void draw_time(byte h, byte m, byte s)
+void draw_time(byte h, byte m, byte s, ClockMode mode)
 {
     byte x = X0;
-    
+
+    if (mode == AMPM)
+    {
+        // draw AM/PM indicator (1 char wide)
+        if (h >= 12)
+        {
+            locate(X1, Y1);
+            printf("PM");
+        }
+        else
+        {
+            locate(X1, Y1);
+            printf("AM");
+        }
+
+        if (h == 0)
+            h = 12; /* Midnight */
+        else if (h > 12)
+            h -= 12; /* Convert to 12-hour format */
+    }
+    else
+    {
+        locate(X1, Y1);
+        printf("  ");  /* Clear AM/PM area */
+    }
+
     if (h != last_h)
     {
         draw_glyph(h / 10, x);
@@ -240,15 +274,35 @@ void draw_date(byte century, byte year, byte month, byte day)
 
 int main(void)
 {
+    ClockMode mode = MILITARY;  /* Default to 24-hour mode */
     width(32);
     cls(1);
-    while (!inkey())
+    byte key = 0;
+
+
+    while (true)
     {
+        key = inkey();
+
+        if (key == SPACE)
+        {
+            /* Toggle clock mode */
+            if (mode == MILITARY)
+                mode = AMPM;
+            else
+                mode = MILITARY;
+        }
+        else if (key != 0)
+        {
+            break; /* Exit on any other key press */
+        }
+
         clock_get_time(timebuf, SIMPLE_BINARY);
 
-        draw_time(timebuf[4], timebuf[5], timebuf[6]);
+        draw_time(timebuf[4], timebuf[5], timebuf[6], mode);
         draw_date(timebuf[0], timebuf[1], timebuf[2], timebuf[3]);
     }
+
     cls(1);
     return 0;
 }
